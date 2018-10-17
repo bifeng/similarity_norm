@@ -7,8 +7,13 @@ import numpy as np
 
 
 # Solution:
-# 1, Reference _predict_proba_lr function
-def softmax(X, copy=True):
+# 4, Supervised method
+# 计算两个句子的similarity，本质上是一个无监督方法，且similarity无法归一化为相对概率（如点积）。
+# 采用监督学习方法，训练一个线性二分类模型，特征为similarity，y值为0/1，即可获得similarity的概率表示。
+# 特征既可以是简单的similarity，也可以是CNN/RNN提取的similarity.
+
+# 3, Logistic function - refer _predict_proba_lr
+def logistic_norm(X, copy=True):
     '''
     1/(exp(-x)+1)
     :param X:
@@ -29,7 +34,7 @@ def softmax(X, copy=True):
 
 # examples:
 X = np.array([3.89, 3.13, 2.22, -1.2, 20.3, -3.33])
-softmax(X).round(4)
+logistic_norm(X).round(4)
 # array([0.98  , 0.9581, 0.902 , 0.2315, 1.    , 0.0346])
 np.reciprocal(np.exp(-(3))+1)
 # 0.9525741268224334
@@ -37,8 +42,8 @@ np.reciprocal(np.exp(-(-3))+1)
 # 0.04742587317756678
 
 
-# 2, Just use the softmax value as probability
-def softmax1(X, v, copy=True):
+# 2, Softmax function - refer softmax
+def softmax_norm(X, v, copy=True):
     '''
     :param X: dot product score of one query with all documents
     :param v: dot product score of one query with itself
@@ -56,7 +61,7 @@ def softmax1(X, v, copy=True):
     return X
 
 
-def softmax2(X, v, copy=True):
+def softmax(X, v, copy=True):
     '''
     :param X: dot product score of one query with all documents
     :param v: dot product score of one query with itself
@@ -73,12 +78,12 @@ def softmax2(X, v, copy=True):
 
 # counter examples:
 X = np.array([20.89, 22.13, 23.22, -15.2, 24.3, -20.33])
-softmax1(X, 24.3).round(4)
+softmax_norm(X, 24.3).round(4)
 # array([0.0222, 0.0768, 0.2284, 0.    , 0.6726, 0.    ])
-softmax2(X, 24.3).round(4)
+softmax(X, 24.3).round(4)
 # array([0.033 , 0.1142, 0.3396, 0.    , 1.    , 0.    ])
 
-# 3, Just use the similarity value [-1, 1]. Discard the negative part, and use it as probability.
+# 1, Just use the similarity value [-1, 1]. Discard the negative part, and use it as probability.
 
 
 # Attention - difference between np.exp(x)/np.reciprocal(x) and np.exp(x,x)/np.reciprocal(x,x)
