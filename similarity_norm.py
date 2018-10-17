@@ -45,7 +45,7 @@ np.reciprocal(np.exp(-(-3))+1)
 # 0.04742587317756678
 
 
-# 2, Softmax function - refer softmax.md
+# 2, Softmax function - refer softmax
 def softmax_norm(X, v, copy=True):
     '''
     :param X: dot product score of one query with all documents
