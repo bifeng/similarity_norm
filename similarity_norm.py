@@ -12,6 +12,9 @@ import numpy as np
 # 采用监督学习方法，训练一个线性二分类模型，特征为similarity，y值为0/1，即可获得similarity的概率表示。
 # 特征既可以是简单的similarity，也可以是CNN/RNN提取的similarity.
 
+# Representation:
+# similarity * coef + intercept = label
+
 # 3, Logistic function - refer _predict_proba_lr
 def logistic_norm(X, copy=True):
     '''
