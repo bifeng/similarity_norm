@@ -3,9 +3,9 @@ import numpy as np
 
 def softmax(X, copy=True):
     """
-    Calculate the softmax function.
+    Calculate the softmax.md function.
 
-    The softmax function is calculated by
+    The softmax.md function is calculated by
     np.exp(X) / np.sum(np.exp(X), axis=1)
 
     This will cause overflow when large values are exponentiated.
